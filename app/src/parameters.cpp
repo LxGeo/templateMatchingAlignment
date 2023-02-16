@@ -1,4 +1,7 @@
 #include "parameters.h"
+#include "cli/common_options/grid_options.h"
+#include "cli/common_options/device.h"
+#include "template_matcher_alignment.h"
 
 namespace LxGeo
 {
@@ -9,17 +12,21 @@ namespace LxGeo
 			init();
 			CLI::App app{ "Template Matching Alignment" };
 			app.add_option("--tshp", template_shapefile, "Polygons shapefile of rooftops to align!")->required()->check(CLI::ExistingFile);
+			app.add_option("--template_image", template_image, "Template image used to soak polygon patches!")->required()->check(CLI::ExistingFile);
 			app.add_option("--search_image", search_image, "Reference image used as search space for polygon patches!")->required()->check(CLI::ExistingFile);
 			app.add_option("--imd1", imd1_path, "Metadata file respective to template image (template shapefile)!")->required()->check(CLI::ExistingFile);
 			app.add_option("--imd2", imd2_path, "Metadata file respective to search image!")->required()->check(CLI::ExistingFile);
 			app.add_option("-o, --output", output_shapefile, "Output path of matched polygons shapefile!");
+			add_grid_options(app, *this);
+			add_device_option(app, *this);
+
 			try {
 				\
-					(app).parse((argc), (argv));                                                                                   \
+					(app).parse((argc), (argv));\
 			}
 			catch (const CLI::ParseError& e) {
 				\
-					(app).exit(e);                                                                                          \
+					(app).exit(e);\
 			}
 			//app.parse(argc, argv);
 		}
@@ -43,7 +50,6 @@ namespace LxGeo
 			template_shapefile.clear();
 			search_image.clear();
 			imd1_path.clear(); imd2_path.clear();
-
 			output_shapefile = "result.shp";
 			temp_dir = "temp_dir";
 			overwrite_output = false;
