@@ -53,6 +53,11 @@ else()
   message(STATUS "NOTICE: This exe requires fmt and will not be compiled.")
 endif()
 
+find_package(CUDA REQUIRED)
+include_directories(
+    ${CUDA_INCLUDE_DIRS}
+)
+
 
 include_directories(include)
 include_directories("$ENV{LX_GEO_REPOS_ROOT}/LxGeoCppLibs/libs/shared/include/")
