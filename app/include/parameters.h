@@ -2,6 +2,7 @@
 #include "defs.h"
 #include "cli/base_parameters.h"
 #include "CLI/CLI.hpp"
+#include "tm_manager.h"
 
 
 namespace LxGeo
@@ -28,8 +29,11 @@ namespace LxGeo
 			std::string search_image;
 			std::string imd1_path;
 			std::string imd2_path;
+			std::string couple_path;
 			std::string output_shapefile;
 			std::string temp_dir;
+			TemplateMatchingMethod tm_method;
+			int search_radius_pixels;
 
 			bool overwrite_output;
 
